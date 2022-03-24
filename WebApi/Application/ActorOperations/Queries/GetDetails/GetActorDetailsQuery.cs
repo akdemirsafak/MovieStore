@@ -18,7 +18,9 @@ namespace WebApi.Application.ActorOperations.Queries.GetDetails
 
         public ActorDetailsViewModel Handle()
         {
-            var actor=_context.Actors.Include(x=>x.Movies).SingleOrDefault(x=>x.Id==ActorId);
+            var actor=_context.Actors
+            .Include(x=>x.MovieActors).ThenInclude(x=>x.Movie)
+            .SingleOrDefault(x=>x.Id==ActorId);
             if (actor is null)
             {
                 throw new InvalidOperationException("Bu Aktör Bulunamadı.");
@@ -32,6 +34,7 @@ namespace WebApi.Application.ActorOperations.Queries.GetDetails
     { 
         public string Name { get; set; }
         public string LastName { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<string> Movies { get; set; }
+        
     }
 }

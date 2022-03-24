@@ -2,6 +2,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieStoreDbContext>(option => option.UseInMemoryDatabase(databaseName: "MovieStoreDB"));
 builder.Services.AddScoped<IMovieStoreDbContext>(provider => provider.GetService<MovieStoreDbContext>());
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddSingleton<ILoggerService, ConsoleLogger>(); //interface i ve implemente edilen ConsoleLogger(tercihimize göre,burada tanımladık.)
 
 
 var app = builder.Build();

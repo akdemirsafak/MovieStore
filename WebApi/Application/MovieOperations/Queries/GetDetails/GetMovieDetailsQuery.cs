@@ -18,7 +18,11 @@ namespace WebApi.Application.MovieOperations.Queries.GetDetails
 
         public MovieDetailsViewModel Handle()
         {
-            var movie=_context.Movies.Include(x=>x.Director).Include(x=>x.Genre).Include(x=>x.Actors).SingleOrDefault(x=>x.Id.Equals(MovieId));
+            var movie=_context.Movies
+            .Include(x=>x.Director)
+            .Include(x=>x.Genre)
+            .Include(x=>x.MovieActors).ThenInclude(x=>x.Actor)
+            .SingleOrDefault(x=>x.Id.Equals(MovieId));
             if (movie is null)
             {
                 throw new Exception("Görüntülenecek Film Bulunamadı.");
@@ -29,7 +33,6 @@ namespace WebApi.Application.MovieOperations.Queries.GetDetails
                 return movieDvm;
             }
            
-            
         }
     }
 
@@ -40,6 +43,8 @@ namespace WebApi.Application.MovieOperations.Queries.GetDetails
         public decimal Price { get; set; }
         public string Director { get; set; }
         public string Genre { get; set; }
-         public List<Actor> Actors { get; set; }
+
+        public List<string> MovieActors { get; set; }
     }
+   
 }

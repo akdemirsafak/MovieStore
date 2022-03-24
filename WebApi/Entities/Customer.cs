@@ -9,7 +9,8 @@ namespace WebApi.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public bool isActive { get; set; }
-         public List<Movie> BoughtMovies { get; set; }
-         public List<Genre> FavoriteGenres { get; set; }
+        // public List<Movie> BoughtMovies { get; set; }
+        // public List<CustomerGenre> CustomerFavGenres { get; set; }
+         
     }
 }

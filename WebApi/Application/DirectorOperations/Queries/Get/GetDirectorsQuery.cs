@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
 
 namespace WebApi.Application.DirectorOperations.Queries.Get
@@ -15,7 +16,9 @@ namespace WebApi.Application.DirectorOperations.Queries.Get
 
         public List<DirectorViewModel> Handle()
         {
-            var directors=_context.Directors.ToList();
+            var directors=_context.Directors
+            .Include(x=>x.Movies)
+            .ToList().OrderBy(x => x.Id);
             List<DirectorViewModel> directorViewModels=_mapper.Map<List<DirectorViewModel>>(directors);
             return directorViewModels;
         }
@@ -26,5 +29,6 @@ namespace WebApi.Application.DirectorOperations.Queries.Get
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        public List<string> Movies { get; set; }
     }
 }

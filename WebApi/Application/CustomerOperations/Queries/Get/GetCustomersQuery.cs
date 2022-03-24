@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
 using WebApi.Entities;
 
@@ -16,7 +17,9 @@ namespace WebApi.Application.CustomerOperations.Queries.Get
 
         public List<CustomerViewModel> Handle()
         {
-            var customers = _context.Customers.ToList();
+            var customers = _context.Customers
+            //.Include(x=>x.CustomerFavGenres).ThenInclude(x => x.Genre)
+            .ToList().OrderBy(x=>x.Id);
             var customerViewList = _mapper.Map<List<CustomerViewModel>>(customers);
             return customerViewList;
         }
@@ -25,5 +28,11 @@ namespace WebApi.Application.CustomerOperations.Queries.Get
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        //public List<Genre> CustomerFavGenres { get; set; }
     }
+
+ 
+
+   
+   
 }

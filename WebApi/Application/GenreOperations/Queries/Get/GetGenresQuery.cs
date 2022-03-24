@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
+using WebApi.Entities;
 
 namespace WebApi.Application.GenreOperations.Queries.Get
 {
@@ -15,7 +17,9 @@ namespace WebApi.Application.GenreOperations.Queries.Get
 
         public List<GenreViewModel> Handle()
         {
-            var genres=_context.Genres.ToList();
+            var genres=_context.Genres
+    
+            .ToList().OrderBy(x => x.Id);
             List<GenreViewModel> genresViewModel=_mapper.Map<List<GenreViewModel>>(genres);
             return genresViewModel;
         }
@@ -24,5 +28,7 @@ namespace WebApi.Application.GenreOperations.Queries.Get
     public class GenreViewModel
     {
         public string Name { get; set; }
+       
+        
     }
 }

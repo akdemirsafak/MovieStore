@@ -37,3 +37,4 @@
 /Users/akdemirsafak/Desktop/Patika/NetCore/MovieStore/WebApi/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll
 /Users/akdemirsafak/Desktop/Patika/NetCore/MovieStore/WebApi/bin/Debug/net6.0/FluentValidation.AspNetCore.dll
 /Users/akdemirsafak/Desktop/Patika/NetCore/MovieStore/WebApi/bin/Debug/net6.0/FluentValidation.DependencyInjectionExtensions.dll
+/Users/akdemirsafak/Desktop/Patika/NetCore/MovieStore/WebApi/bin/Debug/net6.0/Newtonsoft.Json.dll

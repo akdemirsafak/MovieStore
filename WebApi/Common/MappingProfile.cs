@@ -27,32 +27,65 @@ namespace WebApi.Common
             CreateMap<Genre,GenreViewModel>();
             CreateMap<CreateGenreModel, Genre>();
 
+
+
             //MOVIE
             CreateMap<CreateMovieModel,Movie>();
             CreateMap<Movie, MovieDetailsViewModel>()
                 .ForMember(dest => dest.Date, src => src.MapFrom(opt => opt.PublishDate.ToString("dd.MM.yyyy")))
                 .ForMember(dest => dest.Genre, src => src.MapFrom(opt => opt.Genre.Name))
-                .ForMember(dest => dest.Director, src => src.MapFrom(opt => opt.Director.Name + " " + opt.Director.LastName));
+                .ForMember(dest => dest.Director, src => src.MapFrom(opt => opt.Director.Name + " " + opt.Director.LastName))
+                .ForMember(dest => dest.MovieActors,
+                    src => src.
+                    MapFrom(opt => opt.MovieActors.Select(x => x.Actor.Name + " " + x.Actor.LastName))
+                );
+
             CreateMap<Movie,MovieViewModel>()
                 .ForMember(dest=>dest.Date,src=>src.MapFrom(opt=>opt.PublishDate.ToString("dd.MM.yyyy")))
                 .ForMember(dest=>dest.Genre,src=>src.MapFrom(opt=>opt.Genre.Name))
-                .ForMember(dest => dest.Director, src => src.MapFrom(opt => opt.Director.Name+" "+opt.Director.LastName));
+                .ForMember(dest => dest.Director, src => src.MapFrom(opt => opt.Director.Name+" "+opt.Director.LastName))
+                .ForMember(dest => dest.MovieActors,
+                 src =>src.
+                 MapFrom(opt=>opt.MovieActors.Select(x=>x.Actor.Name + " " + x.Actor.LastName))
+                 );
+            
+
 
             //ACTOR
             CreateMap<CreateActorModel, Actor>();
-            CreateMap<Actor, ActorDetailsViewModel>();
-            CreateMap<Actor, ActorViewModel>();
+            CreateMap<Actor, ActorDetailsViewModel>()
+                .ForMember(dest => dest.Movies,
+                    src => src.
+                    MapFrom(opt => opt.MovieActors.Select(x => x.Movie.Name))
+                ); 
+            
+            CreateMap<Actor, ActorViewModel>()
+              .ForMember(dest => dest.Movies,
+                    src => src.
+                    MapFrom(opt => opt.MovieActors.Select(x => x.Movie.Name))
+                ); 
 
             //DIRECTOR
             CreateMap<CreateDirectorModel, Director>();
-            CreateMap<Director, DirectorDetailsViewModel>();
-            CreateMap<Director, DirectorViewModel>();
-
+            CreateMap<Director, DirectorDetailsViewModel>()
+            .ForMember(dest => dest.Movies,
+                 src => src.
+                 MapFrom(opt => opt.Movies.Select(x => x.Name))
+                 );
+            CreateMap<Director, DirectorViewModel>()
+            .ForMember(dest => dest.Movies,
+                 src => src.
+                 MapFrom(opt => opt.Movies.Select(x=>x.Name))
+                 );
+            
             //CUSTOMER
-             CreateMap<CreateCustomerModel, Customer>();
+            CreateMap<CreateCustomerModel, Customer>();
             CreateMap<Customer, CustomerDetailsViewModel>();
-             CreateMap<Customer, CustomerViewModel>();
-
+            CreateMap<Customer, CustomerViewModel>();
+         
+             
+        
+           
 
 
         }

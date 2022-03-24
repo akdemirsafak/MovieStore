@@ -23,6 +23,10 @@ namespace WebApi.Application.ActorOperations.Commands.Create
             {
                 throw new InvalidOperationException("Bu Aktör Zaten Kayıtlı.");
             }
+            if (Model.Name=="string" || Model.LastName=="string")
+            {
+                throw new InvalidOperationException("Ad veya Soyad 'string' olamaz.!");
+            }
             actor=_mapper.Map<Actor>(Model);
             _context.Actors.Add(actor);
             _context.SaveChanges();

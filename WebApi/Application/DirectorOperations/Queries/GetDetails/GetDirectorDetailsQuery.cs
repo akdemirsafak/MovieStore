@@ -18,7 +18,9 @@ namespace WebApi.Application.DirectorOperations.Queries.GetDetails
         
         public DirectorDetailsViewModel Handle()
         {
-            var director=_context.Directors.Include(x=>x.Movies).SingleOrDefault(x=>x.Id==DirectorId);
+            var director=_context.Directors
+            .Include(x => x.Movies)
+            .SingleOrDefault(x=>x.Id==DirectorId);
             if (director is null)
             {
                 throw new Exception("Görüntülenecek Yönetmen Bulunamadı.");
@@ -30,14 +32,12 @@ namespace WebApi.Application.DirectorOperations.Queries.GetDetails
             }
         }
 
-
-
     }
 
     public class DirectorDetailsViewModel
     {
         public string Name { get; set; }
         public string LastName { get; set; }
-        //public List<Movie> Movies { get; set; }
+        public List<string> Movies { get; set; }
     }
 }

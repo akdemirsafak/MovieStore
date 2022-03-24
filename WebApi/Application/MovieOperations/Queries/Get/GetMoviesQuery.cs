@@ -17,8 +17,11 @@ namespace WebApi.Application.MovieOperations.Queries.Get
 
         public List<MovieViewModel> Handle()
         {
-            var movies=_context.Movies.Include(x=>x.Director).Include(x=>x.Genre).ToList(); //.Include(x => x.Actors)
-           //Film var.
+            var movies=_context.Movies
+                .Include(x=>x.Director)
+                .Include(x=>x.Genre)
+                .Include(x=>x.MovieActors).ThenInclude(x=>x.Actor)
+                    .ToList().OrderBy(x => x.Id);
             List<MovieViewModel> moviesViewModel=_mapper.Map<List<MovieViewModel>>(movies);
             return moviesViewModel;
         }
@@ -32,6 +35,11 @@ namespace WebApi.Application.MovieOperations.Queries.Get
         public string Director { get; set; }
         public string Genre { get; set; }
      
-        public List<Actor> Actors { get; set; }
+        //public List<Actor> MovieActors { get; set; }
+        public List<string> MovieActors { get; set; }
+    
     }
+   
+
+    
 }

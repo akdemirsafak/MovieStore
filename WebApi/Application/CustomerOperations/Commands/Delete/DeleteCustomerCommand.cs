@@ -16,20 +16,21 @@ namespace WebApi.Application.CustomerOperations.Commands.Delete
         }
         public void Handle()
         {
-            var customer=_context.Customers.Include(x=>x.BoughtMovies).Include(x=>x.FavoriteGenres).SingleOrDefault(x=>x.Id==CustomerId);
+            var customer=_context.Customers
+            // .Include(x=>x.BoughtMovies)
+            // .Include(x=>x.CustomerFavGenres).ThenInclude(x=>x.Genre)
+            .SingleOrDefault(x=>x.Id==CustomerId);
             if (customer is null)
             {
                 throw new InvalidOperationException("Silinecek müşteri bulunamadı");
             }
-            if (customer.BoughtMovies.Any() || customer.FavoriteGenres.Any())
-            {
-                customer.isActive=false;
-            }
+
             else
             {
-                _context.Customers.Remove(customer);
+                customer.isActive = false;
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            
         }
     }
 }

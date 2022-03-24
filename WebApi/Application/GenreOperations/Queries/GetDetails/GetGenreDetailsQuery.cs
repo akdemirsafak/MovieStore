@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
+using WebApi.Entities;
 
 namespace WebApi.Application.GenreOperations.Queries.GetDetails
 {
@@ -16,7 +18,9 @@ namespace WebApi.Application.GenreOperations.Queries.GetDetails
 
         public GenreDetailsViewModel Handle()
         {
-            var genre=_context.Genres.SingleOrDefault(x=>x.Id.Equals(GenreId));
+            var genre=_context.Genres
+            //.Include(x=>x.Movies)
+            .SingleOrDefault(x=>x.Id.Equals(GenreId));
             if (genre is null)
             {
                 throw new Exception("Görüntülenecek Kategori Bulunamadı.");
@@ -33,5 +37,6 @@ namespace WebApi.Application.GenreOperations.Queries.GetDetails
     public class GenreDetailsViewModel
     {
         public string Name { get; set; }
+        //public List<Movie> Movies { get; set; }
     }
 }

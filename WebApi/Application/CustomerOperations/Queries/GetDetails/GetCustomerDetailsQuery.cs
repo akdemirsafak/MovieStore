@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DbOperations;
+using WebApi.Entities;
 
 namespace WebApi.Application.CustomerOperations.Queries.GetDetails
 {
@@ -16,7 +18,9 @@ namespace WebApi.Application.CustomerOperations.Queries.GetDetails
 
         public CustomerDetailsViewModel Handle()
         {
-            var customer = _context.Customers.Find(CustomerId);
+            var customer = _context.Customers
+            // .Include(x=>x.CustomerFavGenres).ThenInclude(x=>x.Genre)
+            .SingleOrDefault(x=>x.Id==CustomerId);
             if(customer is null)
             {
                 throw new InvalidOperationException("Bu Müşteri Bulunamadı.");
@@ -29,6 +33,7 @@ namespace WebApi.Application.CustomerOperations.Queries.GetDetails
     public class CustomerDetailsViewModel
     {
         public string Name { get; set; }
-        public string LastName { get; set; }        
+        public string LastName { get; set; } 
+        // public List<Genre> Genres { get; set; }       
     }
 }

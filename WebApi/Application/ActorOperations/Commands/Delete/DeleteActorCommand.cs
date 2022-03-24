@@ -15,23 +15,20 @@ namespace WebApi.Application.ActorOperations.Commands.Delete
 
         public void Handle()
         {
-            var actor=_context.Actors.Include(x=>x.Movies).SingleOrDefault(x=>x.Id==ActorId);
-            
+            var actor=_context.Actors
+                .SingleOrDefault(x=>x.Id==ActorId);
+
             if (actor is null)
             {
                 throw new InvalidOperationException("Silinecek Aktör Bulunamadı.");
             }
-            if (actor.Movies.Any())
-            {
-                actor.isActive = false;
-
-            }
             else
             {
-                _context.Actors.Remove(actor);
+                actor.isActive = false;
+                _context.SaveChanges();
             }
 
-            _context.SaveChanges();
+           
         }
     }
 }

@@ -13,7 +13,7 @@ namespace WebApi.Entities
         public int GenreId { get; set; }
         public Director Director { get; set; }
         public int DirectorId { get; set; }
-        public List<Actor> Actors { get; set; } 
+        public List<MovieActor> MovieActors { get; set; } 
       
     }
 }

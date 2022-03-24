@@ -15,20 +15,15 @@ namespace WebApi.Application.GenreOperations.Commands.Delete
 
         public void Handle()
         {
-            var genre=_context.Genres.Include(x=>x.Movies).SingleOrDefault(x=>x.Id==GenreId);
+            var genre=_context.Genres
+            
+            .SingleOrDefault(x=>x.Id==GenreId);
             if (genre is null)
             {
                 throw new InvalidOperationException("Silinecek Kategori Bulunamadı.");
             }
-            
-            if(genre.Movies.Any()){
-                genre.isActive =false;
-                
-            }
-            else{
-                _context.Genres.Remove(genre);
-            }
-            
+
+            genre.isActive = false;
             _context.SaveChanges();
             
         }
