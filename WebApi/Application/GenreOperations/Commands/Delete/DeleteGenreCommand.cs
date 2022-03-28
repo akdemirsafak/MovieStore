@@ -22,8 +22,15 @@ namespace WebApi.Application.GenreOperations.Commands.Delete
             {
                 throw new InvalidOperationException("Silinecek Kategori Bulunamadı.");
             }
-
-            genre.isActive = false;
+            
+            if (genre.GenreCustomers.Any() || genre.GenreMovies.Any())
+            {
+                genre.isActive = false;   
+            }
+            else
+            {
+                _context.Genres.Remove(genre);
+            }
             _context.SaveChanges();
             
         }

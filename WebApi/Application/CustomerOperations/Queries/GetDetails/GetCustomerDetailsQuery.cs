@@ -19,7 +19,7 @@ namespace WebApi.Application.CustomerOperations.Queries.GetDetails
         public CustomerDetailsViewModel Handle()
         {
             var customer = _context.Customers
-            // .Include(x=>x.CustomerFavGenres).ThenInclude(x=>x.Genre)
+            .Include(x => x.CustomerGenres).ThenInclude(x => x.Genre)
             .SingleOrDefault(x=>x.Id==CustomerId);
             if(customer is null)
             {
@@ -34,6 +34,6 @@ namespace WebApi.Application.CustomerOperations.Queries.GetDetails
     {
         public string Name { get; set; }
         public string LastName { get; set; } 
-        // public List<Genre> Genres { get; set; }       
+        public List<string> FavGenres { get; set; }       
     }
 }

@@ -38,6 +38,7 @@ namespace WebApi.Application.DirectorOperations.Queries.GetDetails
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        public bool isActive { get; set; }
         public List<string> Movies { get; set; }
     }
 }

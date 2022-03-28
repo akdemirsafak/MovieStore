@@ -19,7 +19,8 @@ namespace WebApi.Application.GenreOperations.Queries.GetDetails
         public GenreDetailsViewModel Handle()
         {
             var genre=_context.Genres
-            //.Include(x=>x.Movies)
+            .Include(x => x.GenreCustomers).ThenInclude(x => x.Customer)
+            .Include(x => x.GenreMovies)
             .SingleOrDefault(x=>x.Id.Equals(GenreId));
             if (genre is null)
             {
@@ -37,6 +38,11 @@ namespace WebApi.Application.GenreOperations.Queries.GetDetails
     public class GenreDetailsViewModel
     {
         public string Name { get; set; }
-        //public List<Movie> Movies { get; set; }
+        public int HowMuchCustomerFav { get; set; }
+        public bool isActive { get; set; }
+
+        public List<string> Customers { get; set; }
+
+        public List<string> GenreMovies { get; set; }
     }
 }

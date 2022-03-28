@@ -16,29 +16,24 @@ namespace WebApi.Application.DirectorOperations.Commands.Delete
         public void Handle()
         {
             var director = _context.Directors
-            //.Include(x => x.Movies)
+            .Include(x => x.Movies)
             .SingleOrDefault(x => x.Id == DirectorId);
 
             if (director is null)
             {
                 throw new InvalidOperationException("Silinecek Yönetmen Bulunamadı.");
             }
-            else
+            if (director.Movies.Any())
             {
                 director.isActive = false;
-                _context.SaveChanges();
+                
             }
-            // if (director is not)
-            // {
-            //     director.isActive = false;
+            else
+            {
+                _context.Directors.Remove(director);
+            }
+            _context.SaveChanges();
 
-            // }
-            // else
-            // {
-            //     _context.Directors.Remove(director);
-            // }
-
-            //_context.SaveChanges();
         }
     }
 }

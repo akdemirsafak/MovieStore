@@ -22,12 +22,16 @@ namespace WebApi.Application.ActorOperations.Commands.Delete
             {
                 throw new InvalidOperationException("Silinecek Aktör Bulunamadı.");
             }
-            else
+        
+            if (actor.MovieActors.Any())
             {
                 actor.isActive = false;
-                _context.SaveChanges();
             }
-
+            else
+            {
+                _context.Actors.Remove(actor);
+            }
+            _context.SaveChanges();
            
         }
     }

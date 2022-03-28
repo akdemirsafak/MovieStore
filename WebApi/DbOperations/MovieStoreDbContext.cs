@@ -17,30 +17,24 @@ namespace WebApi.DbOperations
         public DbSet<Director> Directors { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        
+
+        public DbSet<Order> Orders { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MovieActor>()
                 .HasKey(m => new { m.MovieId, m.ActorId });
+                
+            modelBuilder.Entity<CustomerGenre>()
+                .HasKey(cg => new { cg.CustomerId, cg.GenreId });
 
-            // modelBuilder.Entity<MovieActor>()
-            //     .HasOne<Movie>(ma =>ma.Movie)
-            //     .WithMany(m => m.MovieActors)
-            //     .HasForeignKey(m => m.MovieId);
+            modelBuilder.Entity<Order>()
+                .HasKey(o => new { o.CustomerId, o.Movie });
 
+          
 
-            // modelBuilder.Entity<MovieActor>()
-            //     .HasOne<Actor>(ma => ma.Actor)
-            //     .WithMany(m => m.MovieActors)
-            //     .HasForeignKey(m => m.ActorId);
-
-
-
-
-        //     modelBuilder.Entity<CustomerGenre>()
-        //    .HasKey(cg => new { cg.CustomerId, cg.GenreId });
+            
         }
 
         public override int SaveChanges()

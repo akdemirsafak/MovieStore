@@ -31,11 +31,11 @@ namespace WebApi.DbOperations
                         new Genre { Name = "Suç" }
                     );
                     context.Directors.AddRange(
-                        new Director { Name = "Şafak",          LastName="Akdemir"},
-                        new Director { Name = "Christopher",    LastName="Nolan"},//batman
-                        new Director{ Name = "Francis Ford",    LastName = "Coppola"}, //
-                        new Director{ Name = "Glenn",           LastName="Ficarra"}, //focus
-                        new Director{ Name = "David Ford",      LastName = "Fincher" } //fight clup
+                        new Director { Name = "Şafak",          LastName="Akdemir",     isActive=true},
+                        new Director { Name = "Christopher",    LastName="Nolan",       isActive = true },//batman
+                        new Director{ Name = "Francis Ford",    LastName = "Coppola",   isActive = false }, //
+                        new Director{ Name = "Glenn",           LastName="Ficarra",     isActive = true }, //focus
+                        new Director{ Name = "David Ford",      LastName = "Fincher",   isActive = true } //fight clup
                     );
                     
                     context.Actors.AddRange(
@@ -56,15 +56,9 @@ namespace WebApi.DbOperations
                         new Movie { Name = "The Godfather",     GenreId = 5, Price = 200,   PublishDate = DateTime.Now.AddYears(-50),   DirectorId = 2 },
                         new Movie { Name = "Fight Club",        GenreId = 2, Price = 500,   PublishDate = DateTime.Now.AddYears(-2),    DirectorId = 5 }
                     );
-
-                    // context.Orders.AddRange(
-                    //    new Order { MovieId = 4, CustomerId = 2, Date = DateTime.Now.AddDays(-20),   Price = 100 },
-                    //    new Order { MovieId = 2, CustomerId = 5, Date = DateTime.Now.AddMonths(-2),  Price = 300 }
-                    // );
                     
                     context.AddRange(MovieActors);
-
-                    // context.AddRange(CustomerGenres);
+                    context.AddRange(CustomerGenres);
 
                     context.SaveChanges();
 
@@ -87,19 +81,19 @@ namespace WebApi.DbOperations
             new MovieActor(){   MovieId=4,    ActorId=9 }
             
         };
-    //     private static CustomerGenre[] CustomerGenres =
-    //    {
-    //         new CustomerGenre(){   CustomerId=1,    GenreId=1 },
-    //         new CustomerGenre(){   CustomerId=1,    GenreId=2 },
-    //         new CustomerGenre(){   CustomerId=2,    GenreId=2 }, 
+        private static CustomerGenre[] CustomerGenres =
+       {
+            new CustomerGenre(){   CustomerId=1,    GenreId=1 },
+            new CustomerGenre(){   CustomerId=1,    GenreId=2 },
+            new CustomerGenre(){   CustomerId=2,    GenreId=2 }, 
 
-    //         new CustomerGenre(){   CustomerId=5,    GenreId=2 }, 
-    //         new CustomerGenre(){   CustomerId=5,    GenreId=3 },
-    //         new CustomerGenre(){   CustomerId=5,    GenreId=4 },
-    //         new CustomerGenre(){   CustomerId=5,    GenreId=5 }
+            new CustomerGenre(){   CustomerId=5,    GenreId=2 }, 
+            new CustomerGenre(){   CustomerId=5,    GenreId=3 },
+            new CustomerGenre(){   CustomerId=5,    GenreId=4 },
+            new CustomerGenre(){   CustomerId=5,    GenreId=5 }
 
 
-    //     };
+        };
 
     }
 }

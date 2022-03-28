@@ -18,7 +18,8 @@ namespace WebApi.Application.GenreOperations.Queries.Get
         public List<GenreViewModel> Handle()
         {
             var genres=_context.Genres
-    
+            .Include(x=>x.GenreCustomers).ThenInclude(x=>x.Customer)
+            .Include(x=>x.GenreMovies)
             .ToList().OrderBy(x => x.Id);
             List<GenreViewModel> genresViewModel=_mapper.Map<List<GenreViewModel>>(genres);
             return genresViewModel;
@@ -28,6 +29,8 @@ namespace WebApi.Application.GenreOperations.Queries.Get
     public class GenreViewModel
     {
         public string Name { get; set; }
+        public List<string> Customers { get; set; }
+        public List<string> GenreMovies { get; set; }
        
         
     }

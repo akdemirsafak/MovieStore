@@ -23,8 +23,29 @@ namespace WebApi.Common
         public MappingProfile()
         {
             //GENRE
-            CreateMap<Genre, GenreDetailsViewModel>();
-            CreateMap<Genre,GenreViewModel>();
+            CreateMap<Genre, GenreDetailsViewModel>()
+           .ForMember(dest => dest.Customers,
+                 src => src.
+                 MapFrom(opt => opt.GenreCustomers.Select(x => x.Customer.Name + " " + x.Customer.LastName))
+            )
+            .ForMember(dest => dest.HowMuchCustomerFav,
+                 src => src.
+                 MapFrom(opt => opt.GenreCustomers.Count())
+            )
+            .ForMember(dest => dest.GenreMovies,
+                 src => src.
+                 MapFrom(opt => opt.GenreMovies.Select(x => x.Name))
+            );
+            
+            CreateMap<Genre,GenreViewModel>()
+            .ForMember(dest => dest.Customers,
+                 src => src.
+                 MapFrom(opt => opt.GenreCustomers.Select(x => x.Customer.Name + " " + x.Customer.LastName))
+            )
+            .ForMember(dest => dest.GenreMovies,
+                 src => src.
+                 MapFrom(opt => opt.GenreMovies.Select(x => x.Name))
+            );
             CreateMap<CreateGenreModel, Genre>();
 
 
@@ -80,8 +101,17 @@ namespace WebApi.Common
             
             //CUSTOMER
             CreateMap<CreateCustomerModel, Customer>();
-            CreateMap<Customer, CustomerDetailsViewModel>();
-            CreateMap<Customer, CustomerViewModel>();
+            CreateMap<Customer, CustomerDetailsViewModel>()
+            .ForMember(dest => dest.FavGenres,
+                src => src.
+                MapFrom(opt => opt.CustomerGenres.Select(x => x.Genre.Name))
+            );
+
+            CreateMap<Customer, CustomerViewModel>()
+            .ForMember(dest => dest.FavGenres,
+                src => src.
+                MapFrom(opt => opt.CustomerGenres.Select(x => x.Genre.Name))
+            );
          
              
         
